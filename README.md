@@ -1,7 +1,7 @@
-# WindowsMeetingSDK#
+# Windows Meeting SDK #
 
-Visionable's Meeting SDK for Windows platforms (currently .NET)
+Visionable's Windows .NET Meeting SDK
 
 # Documentation #
 
-Documentation for the Windows MeetingSDK can be found at [Documentation](https://visionable.readme.io/docs/windows)
+Documentation for the Windows .NET Meeting SDK can be found at [Documentation](https://visionable.readme.io/docs/windows)
