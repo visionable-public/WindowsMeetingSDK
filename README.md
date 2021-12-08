@@ -1,8 +1,7 @@
-# Getting Started for Windows Platforms #
+# WindowsMeetingSDK#
 
-## Documentation ##
-[Documentation](https://visionable.readme.io/docs/windows)
+Visionable's Meeting SDK for Windows platforms (currently .NET)
 
-## The Meeting SDK Distribution ##
+# Documentation #
 
-To obtain the Meeting SDK for Windows, use the [Downloads](https://github.com/visionable-public/WindowsMeetingSDK "Downloads") link to access the GitHub repository holding the Meeting SDK.
+Documentation for the Windows MeetingSDK can be found at [Documentation](https://visionable.readme.io/docs/windows)
