@@ -1,7 +1,7 @@
 # Getting Started for Windows Platforms #
 
 ## Documentation ##
-[Documentation](https://visionable.readme.io/docs/windows]
+[Documentation](https://visionable.readme.io/docs/windows)
 
 ## The Meeting SDK Distribution ##
 
