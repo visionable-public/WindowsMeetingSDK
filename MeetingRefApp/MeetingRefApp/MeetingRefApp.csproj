@@ -57,10 +57,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\MeetingSDK\MeetingSDKHigh\bin\$(Configuration)\MeetingSDKHigh.dll</HintPath>
     </Reference>
-    <Reference Include="OSVersionInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MeetingSDK\MeetingSDKHigh\bin\$(Configuration)\OSVersionInfo.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,9 +68,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ToggleSwitch">
-      <HintPath>..\..\MeetingSDK\MeetingSDKHigh\bin\$(Configuration)\ToggleSwitch.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComboboxItem.cs" />
