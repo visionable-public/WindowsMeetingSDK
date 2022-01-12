@@ -54,7 +54,7 @@ namespace MeetingRefApp
             this.textBoxServer.Name = "textBoxServer";
             this.textBoxServer.Size = new System.Drawing.Size(301, 20);
             this.textBoxServer.TabIndex = 1;
-            this.textBoxServer.Text = "";
+            this.textBoxServer.Text = "Server";
             // 
             // textBoxMeetingUUID
             // 
