@@ -11,24 +11,25 @@ class DLLEXPORT VideoInfo {
 public:
     VideoInfo();
     VideoInfo(std::string streamId);
-    std::string site();
-    std::string name();
-    std::string codecName();
-    bool local();
-    bool active();
-    bool ptzStatus();
-    uint8_t layout();
-    uint32_t width();
-    uint32_t height();
+    std::string site() const;
+    std::string name() const;
+    std::string codecName() const;
+    bool local() const;
+    bool active() const;
+    bool ptzStatus() const;
+    uint8_t layout() const;
+    uint32_t width() const;
+    uint32_t height() const;
 public:
     std::string streamId;
 };
 
 class DLLEXPORT AudioInfo {
 public: 
+    AudioInfo() {}
     AudioInfo(std::string streamId);
 
-    std::string site();
+    std::string site() const;
 public:
     std::string streamId;
 };
@@ -36,11 +37,12 @@ public:
 
 class DLLEXPORT Participant {
 public:
+    Participant() {}
     Participant(std::string userUUID);
-    AudioInfo audioInfo();
-    std::map<std::string, VideoInfo> videoInfo();
-    std::string displayName();
-    bool isLocal();
+    AudioInfo audioInfo() const;
+    std::map<std::string, VideoInfo> videoInfo() const;
+    std::string displayName() const;
+    bool isLocal() const;
 
 public:
     std::string userUUID;
