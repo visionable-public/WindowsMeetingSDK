@@ -47,10 +47,17 @@ public:
     void closeSession();
 
 private:
+    // Web Socket related
     void webSocketListener();
     void processDirectMessage(void* parsed);
     void processIncomingWSMessage(std::string message);
     void send(std::string message);
+
+    // Detecting device updates
+    bool usbDevicesChanged;
+    bool deviceUpdateCheckActive;
+    void startDeviceUpdateCheck();
+    void stopDeviceUpdateCheck();
 
 private:
     void *impl;
