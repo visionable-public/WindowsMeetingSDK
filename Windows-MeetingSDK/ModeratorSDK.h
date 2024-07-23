@@ -46,6 +46,8 @@ public:
     void sendDeviceListUpdate();
     void closeSession();
 
+    bool usbDevicesChanged;
+
 private:
     // Web Socket related
     void webSocketListener();
@@ -54,7 +56,6 @@ private:
     void send(std::string message);
 
     // Detecting device updates
-    bool usbDevicesChanged;
     bool deviceUpdateCheckActive;
     void startDeviceUpdateCheck();
     void stopDeviceUpdateCheck();
