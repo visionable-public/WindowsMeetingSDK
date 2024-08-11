@@ -34,7 +34,6 @@ public:
     bool isLocalUser(std::string userUUID);
     void connectWebSocket(std::string meetingUUID, std::string generatedUUID, std::string msgServer, std::string userUUID, std::string mjwt);
     void setDelegate(ModeratorSDKDelegate* delegate) {
-        std::cout << "ModeratorSDK::setDelegate called!" << std::endl;
         this->delegate = delegate;
     }
 
