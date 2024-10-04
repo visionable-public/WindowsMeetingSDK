@@ -64,6 +64,10 @@ public:
     bool enableNetworkVideo(const std::string& url, const std::string& mode, const std::string& name);
     bool disableNetworkVideo(const std::string& url);
 
+    int enableImageCaptureDevice(std::string& displayName, std::string& directory, std::string& mode);
+    bool disableImageCaptureDevice(int deviceId);
+    bool imageCaptureDevicePutImage(int deviceId, const uint8_t *yuv420p_ptr, int width, int height, int size);
+
     bool disableVideoStream(const std::string& streamId);
     bool enableVideoStream(const std::string& streamId);
     bool enableVideoStream(const std::string& streamId, const std::string& colorspace);
