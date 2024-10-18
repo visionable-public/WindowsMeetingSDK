@@ -10,8 +10,16 @@
 
 #include <string>
 
+/**
+ * @brief The ModeratorSDKDelegate class is an interface for receiving different events from the ModeratorSDK.
+ */
 class ModeratorSDKDelegate {
 public:
-	virtual void deviceListUpdated(const std::string& deviceJSON) {};
+	/**
+  * @brief This method is called when the device list is updated.
+  * 
+  * @param deviceJSON The JSON string containing the updated device list.
+  */
+	virtual void deviceListUpdated(const char * deviceJSON) {};
 };
 #endif /* MODERATOR_SDK_DELEGATE_H */

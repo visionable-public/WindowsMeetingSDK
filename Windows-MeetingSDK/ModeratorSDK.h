@@ -13,63 +13,105 @@
 
 #include "ModeratorSDKDelegate.h"
 
-#if defined(_WINDLL)
-#define DLLEXPORT __declspec (dllexport)
+#ifdef _MEETING_SDK_EXPORTS_
+#define MODERATOR_SDK_API __declspec(dllexport)
 #else
-#define DLLEXPORT
+#define MODERATOR_SDK_API __declspec(dllimport)
 #endif
 
-class DLLEXPORT ModeratorSDK {
-private:
-    // Singleton implementation
-    static ModeratorSDK* instance;
-
-    friend class MeetingSDK;
+/**
+ * @brief The ModeratorSDK class provides the functionality to interact with RTN using websockets.
+ * 
+ * This class allows to perform various actions such as connecting to a websocket, sending messages,
+ * controlling PTZ (Pan-Tilt-Zoom) devices, and managing the session.
+ */
+class MODERATOR_SDK_API ModeratorSDK {
 public:
+    /**
+     * @brief Get the shared instance of the ModeratorSDK.
+     * 
+     * @return The shared instance of the ModeratorSDK.
+     */
     static ModeratorSDK* sharedInstance();
 
 public:
-    ModeratorSDK();
-    ~ModeratorSDK();
-    bool isLocalUser(std::string userUUID);
-    void connectWebSocket(std::string meetingUUID, std::string generatedUUID, std::string msgServer, std::string userUUID, std::string mjwt);
-    void setDelegate(ModeratorSDKDelegate* delegate) {
-        this->delegate = delegate;
-    }
+    /**
+     * @brief Check if the specified user is the local user.
+     * 
+     * @param userUUID The UUID of the user to check.
+     * @return true if the specified user is the local user, false otherwise.
+     */
+    bool isLocalUser(const char* userUUID);
 
-    void sendMessage(std::string destination, std::string message);
-    bool sendPTZCommand(std::string user, std::string device, std::string command);
+    /**
+     * @brief Connect to the WebSocket server for the specified meeting.
+     * 
+     * This method establishes a WebSocket connection with the specified meeting using the provided parameters.
+     * 
+     * @param meetingUUID The UUID of the meeting to connect to.
+     * @param generatedUUID The generated UUID for the connection.
+     * @param msgServer The message server URL.
+     * @param userUUID The UUID of the user connecting to the meeting.
+     * @param mjwt The JWT (JSON Web Token) for authentication.
+     */
+    void connectWebSocket(const char* meetingUUID, const char* generatedUUID, const char* msgServer, const char* userUUID, const char* mjwt);
+
+    /**
+     * @brief Set the delegate for receiving callbacks from the ModeratorSDK.
+     * 
+     * @param delegate The delegate object that implements the ModeratorSDKDelegate interface.
+     */
+    void setDelegate(ModeratorSDKDelegate* delegate);
+
+    /**
+     * @brief Send a message to the specified destination.
+     * 
+     * This method sends a message to the specified destination using the WebSocket connection.
+     * 
+     * @param destination The destination of the message.
+     * @param message The message to send.
+     */
+    void sendMessage(const char* destination, const char* message);
+
+    /**
+     * @brief Send a PTZ (Pan-Tilt-Zoom) command to the specified user and device.
+     * 
+     * This method sends a PTZ command to the specified user and device using the WebSocket connection.
+     * 
+     * @param user The UUID of the user to send the command to.
+     * @param device The UUID of the device to send the command to.
+     * @param command The PTZ command to send.
+     * @return true if the command was sent successfully, false otherwise.
+     */
+    bool sendPTZCommand(const char* user, const char* device, const char* command);
+
+    /**
+     * @brief Set whether remote PTZ control is allowed.
+     * 
+     * @param allowed true to allow remote PTZ control, false to disallow.
+     */
     void setRemotePTZAllowed(bool allowed);
+
+    /**
+     * @brief Get whether remote PTZ control is allowed.
+     * 
+     * @return true if remote PTZ control is allowed, false otherwise.
+     */
     bool getRemotePTZAllowed();
 
+    /**
+     * @brief Send an update for the device list.
+     * 
+     * This method sends an update for the device list using the WebSocket connection.
+     */
     void sendDeviceListUpdate();
+
+    /**
+     * @brief Close the session.
+     * 
+     * This method closes the session and disconnects from the WebSocket server.
+     */
     void closeSession();
-
-    bool usbDevicesChanged;
-
-private:
-    // Web Socket related
-    void webSocketListener();
-    void processDirectMessage(void* parsed);
-    void processIncomingWSMessage(std::string message);
-    void send(std::string message);
-
-    // Detecting device updates
-    bool deviceUpdateCheckActive;
-    void startDeviceUpdateCheck();
-    void stopDeviceUpdateCheck();
-
-private:
-    void *impl;
-
-    ModeratorSDKDelegate* delegate;
-
-    bool wsListenerActive;
-    std::string wsMyChannelName;
-    std::string wsDeviceInfoChannel;
-    std::string wsMeetingUUID;
-
-    bool remotePTZAllowed;
 };
 
 #endif /* MODERATOR_SDK_H */

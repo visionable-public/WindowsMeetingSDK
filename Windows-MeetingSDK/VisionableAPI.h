@@ -12,32 +12,57 @@
 #include <functional>
 #include <vector>
 
-#if defined(_WINDLL)
-#define DLLEXPORT __declspec (dllexport)
+#ifdef _MEETING_SDK_EXPORTS_
+#define VISIONABLE_API __declspec(dllexport)
 #else
-#define DLLEXPORT
+#define VISIONABLE_API __declspec(dllimport)
 #endif
 
-class DLLEXPORT VisionableAPI {
-private:
-    // Singleton implementation
-    static VisionableAPI* instance;
+typedef void(*IntializeMeetingCallback)(bool, const char*);
+typedef void(*AuthenticateCallback)(const char*);
 
+/**
+ * @class VisionableAPI
+ * @brief The VisionableAPI class provides functionality for interacting with the Visionable API.
+ * 
+ * The VisionableAPI class provides methods for authentication and initializing meetings.
+ */
+class VISIONABLE_API VisionableAPI {
 public:
+    /**
+     * @brief Get the shared instance of the VisionableAPI class.
+     * @return The shared instance of the VisionableAPI class.
+     */
     static VisionableAPI* sharedInstance();
-    friend class MeetingSDK;
 
 public:
-    VisionableAPI();
-    void authenticate(std::string server, std::string id, std::string password, std::function<void(std::string)> completion);
-    bool initializeMeeting(std::string server, std::string meetingUUID, std::function<void(bool, std::string)> completion);
-    bool initializeMeeting(std::string server, std::string meetingUUID, std::string token, std::function<void(bool, std::string)> completion);
+    /**
+     * @brief Authenticate with the Visionable API.
+     * @param server The server URL.
+     * @param id The user ID.
+     * @param password The user password.
+     * @param completion The callback function to be called after authentication.
+     */
+    void authenticate(const char* server, const char* id, const char* password, AuthenticateCallback completion);
 
-private:
-    // Utility functions
-    std::vector<std::string> splitString(const std::string& source);
-    std::string joinString(std::vector<std::string>components);
+    /**
+     * @brief Initialize a meeting with the Visionable API.
+     * @param server The server URL.
+     * @param meetingUUID The meeting UUID.
+     * @param completion The callback function to be called after meeting initialization.
+     * @return True if the meeting is successfully initialized, false otherwise.
+     */
+    bool initializeMeeting(const char* server, const char* meetingUUID, IntializeMeetingCallback completion);
 
+    /**
+     * @brief Initialize a meeting with the Visionable API using a token.
+     * @param server The server URL.
+     * @param meetingUUID The meeting UUID.
+     * @param token The authentication token.
+     * @param completion The callback function to be called after meeting initialization.
+     * @return True if the meeting is successfully initialized, false otherwise.
+     */
+    bool initializeMeeting(const char* server, const char* meetingUUID, const char* token, IntializeMeetingCallback completion);
 };
 
 #endif /* VISIONABLE_API_H */

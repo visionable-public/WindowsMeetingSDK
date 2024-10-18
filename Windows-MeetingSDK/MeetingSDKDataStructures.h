@@ -1,60 +1,337 @@
-#pragma once
+#ifndef MEETING_SDK_DATASTRUCTURES_H
+#define MEETING_SDK_DATASTRUCTURES_H
+
 #include <iostream>
 #include <map>
 
-#define DLLEXPORT __declspec (dllexport)
+#ifdef _MEETING_SDK_EXPORTS_
+#define DATASTRUCTURE_EXPORT __declspec(dllexport)
+#else
+#define DATASTRUCTURE_EXPORT __declspec(dllimport)
+#endif
+
+// Data encapsulation classes for allocated by SDK objects
+class DATASTRUCTURE_EXPORT VisionableString {
+private:
+    char* m_value;
+
+public:
+    VisionableString();
+    /**
+	* @brief Constructor for VisionableString. Passed string is copied into the object.
+	* This class should not be used by the caller for automatic memory management, only for communication with the SDK.
+    */
+    VisionableString(const char* value);
+
+    /**
+	 * @brief Destructor for VisionableString. Frees the memory allocated for the string.
+     */
+    ~VisionableString();
+
+    VisionableString(const VisionableString&) = delete;
+    VisionableString& operator=(VisionableString&) = delete;
+
+    VisionableString(VisionableString&&);
+    VisionableString& operator=(VisionableString&&) noexcept;
+
+    /**
+     * @brief Get the value of the VisionableString.
+     * @return const char* The value of the string.
+     */
+    const char* getValue() const;
+};
+
+class DATASTRUCTURE_EXPORT VisionableArray {
+private:
+    char** m_value;
+    uint64_t m_size;
+
+public:
+    /**
+	* @brief Constructor for VisionableArray that is storing dynamic array of strings. Passed array is not copied, only the pointer is stored. From moment of passing data into constructor
+	* it is owned by this object and will be freed in destructor.
+    * This class should not be used by the caller for automatic memory management, only for communication with the SDK.
+    * 
+    */
+    VisionableArray();
+    VisionableArray(char** value, uint64_t size);
+
+    /**
+	 * @brief Destructor for VisionableArray. Frees the memory allocated for the array of strings.
+     */
+    ~VisionableArray();
+
+    VisionableArray(const VisionableArray&) = delete;
+    VisionableArray& operator=(VisionableArray&) = delete;
+
+    VisionableArray(VisionableArray&&);
+    VisionableArray& operator=(VisionableArray&&) noexcept;
+
+    /**
+     * @brief Get the value of the VisionableArray.
+     * @return const char** The array of strings.
+     */
+    const char** getValue() const;
+
+    /**
+     * @brief Get the size of the VisionableArray.
+     * @return uint64_t The size of the array.
+     */
+    uint64_t getSize() const;
+};
 
 // Exposed Data Structures.
-
-
-class DLLEXPORT VideoInfo {
+class DATASTRUCTURE_EXPORT WindowInfo {
 public:
-    VideoInfo();
-    VideoInfo(std::string streamId);
-    std::string site() const;
-    std::string name() const;
-    std::string codecName() const;
-    bool local() const;
-    bool active() const;
-    bool ptzStatus() const;
-    uint8_t layout() const;
-    uint32_t width() const;
-    uint32_t height() const;
-public:
-    std::string streamId;
-};
+    WindowInfo();
+    WindowInfo(const char * windowName, uint64_t windowId);
+    WindowInfo(const WindowInfo&) = delete;
+    WindowInfo& operator=(WindowInfo&) = delete;
+    WindowInfo& operator=(WindowInfo&&) noexcept;
 
-class DLLEXPORT AudioInfo {
-public: 
-    AudioInfo() {}
-    AudioInfo(std::string streamId);
+    ~WindowInfo();
 
-    std::string site() const;
-public:
-    std::string streamId;
-};
+    /**
+     * @brief Get the window ID.
+     * @return uint64_t The window ID.
+     */
+    uint64_t getWindowId() const;
 
-
-class DLLEXPORT Participant {
-public:
-    Participant() {}
-    Participant(std::string userUUID);
-    AudioInfo audioInfo() const;
-    std::map<std::string, VideoInfo> videoInfo() const;
-    std::string displayName() const;
-    bool isLocal() const;
-
-public:
-    std::string userUUID;
-};
-
-
-class DLLEXPORT VideoView {
-public:
-    VideoView(std::string streamId);
+    /**
+     * @brief Get the window name.
+     * @return const char* The window name.
+     */
+    const char* getWindowName() const;
 
 private:
-    std::string streamId;
+    uint64_t windowId;
+    char* windowName;
 };
 
+class DATASTRUCTURE_EXPORT WindowsInfoArray {
+public:
+    WindowsInfoArray();
+     /**
+	 * @brief Constructor for WindowsInfoArray. Passed array is not copied, only the pointer is stored.
+	 * This class should be used for automatic memory management of the array of WindowInfo.
+     */
+    WindowsInfoArray(WindowInfo* infoArray, uint64_t size);
 
+    /**
+     * @brief Destructor for WindowsInfoArray. Frees the memory allocated for the array of WindowInfo.
+     */
+    ~WindowsInfoArray();
+
+    WindowsInfoArray(const WindowsInfoArray&) = delete;
+    WindowsInfoArray& operator=(WindowsInfoArray&) = delete;
+
+    WindowsInfoArray(WindowsInfoArray&&);
+    WindowsInfoArray& operator=(WindowsInfoArray&&) noexcept;
+
+    WindowInfo* getInfoArray() const;
+    uint64_t getSize() const;
+
+private:
+    WindowInfo* m_infoArray;
+    uint64_t m_size;
+};
+
+class DATASTRUCTURE_EXPORT VideoInfo {
+public:
+    VideoInfo();
+    VideoInfo(const char * streamId);
+
+    VideoInfo(const VideoInfo&) = delete;
+    VideoInfo& operator=(VideoInfo&) = delete;
+    VideoInfo& operator=(VideoInfo&&) noexcept;
+
+    ~VideoInfo();
+
+    /**
+     * @brief Get the site name.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return char* The site name.
+     */
+    VisionableString site() const;
+
+    /**
+     * @brief Get the name.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return char* The name.
+     */
+    VisionableString name() const;
+
+    /**
+     * @brief Get the stream ID.
+     * @return const char* The stream ID.
+     */
+    const char * getStreamId() const;
+
+    /**
+     * @brief Get the codec name.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return char* The codec name.
+     */
+    VisionableString codecName() const;
+
+    /**
+     * @brief Check if the video is local.
+     * @return bool True if local, false otherwise.
+     */
+    bool local() const;
+
+    /**
+     * @brief Check if the video is active.
+     * @return bool True if active, false otherwise.
+     */
+    bool active() const;
+
+    /**
+     * @brief Get the PTZ (Pan-Tilt-Zoom) status.
+     * @return bool True if PTZ is enabled, false otherwise.
+     */
+    bool ptzStatus() const;
+
+    /**
+     * @brief Get the layout type.
+     * @return uint8_t The layout type.
+     */
+    uint8_t layout() const;
+
+    /**
+     * @brief Get the video width.
+     * @return uint32_t The video width.
+     */
+    uint32_t width() const;
+
+    /**
+     * @brief Get the video height.
+     * @return uint32_t The video height.
+     */
+    uint32_t height() const;
+
+private:
+    char * streamId;
+};
+
+class DATASTRUCTURE_EXPORT AudioInfo {
+public: 
+    AudioInfo();
+    AudioInfo(const char * streamId);
+
+    AudioInfo(AudioInfo&) = delete;
+    AudioInfo& operator=(AudioInfo&) = delete;
+
+    AudioInfo(AudioInfo&&);
+    AudioInfo& operator=(AudioInfo&&) noexcept;
+
+    ~AudioInfo();
+
+    /**
+     * @brief Get the site name.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return char* The site name.
+     */
+    VisionableString site() const;
+
+    /**
+     * @brief Get the stream ID.
+     * @return const char* The stream ID.
+     */
+    const char* getStreamId() const;
+
+private:
+    char * streamId;
+};
+
+class DATASTRUCTURE_EXPORT VideoInfoArray {
+public:
+    VideoInfoArray();
+    VideoInfoArray(VideoInfo* infoArray, uint64_t size);
+    ~VideoInfoArray();
+
+    VideoInfoArray(const VideoInfoArray&) = delete;
+    VideoInfoArray& operator=(VideoInfoArray&) = delete;
+
+    VideoInfoArray(VideoInfoArray&&);
+    VideoInfoArray& operator=(VideoInfoArray&&) noexcept;
+
+	VideoInfo* getInfoArray() const;
+	uint64_t getSize() const;
+
+private:
+	VideoInfo* m_infoArray;
+	uint64_t m_size;
+};
+
+class DATASTRUCTURE_EXPORT Participant {
+public:
+    Participant();
+    Participant(const char * userUUID);
+
+    ~Participant();
+
+    Participant(const Participant&) = delete;
+    Participant& operator=(Participant&) = delete;
+
+    Participant(Participant&&);
+    Participant& operator=(Participant&&) noexcept;
+
+    /**
+     * @brief Get participant audio info.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return AudioInfo The audio info.
+     */
+    AudioInfo audioInfo() const;
+
+    /**
+     * @brief Get participant video info array.
+	 * @note The returned object supports only move semantics, 
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @param unsigned int& count The count of video info.
+     * @return VideoInfoArray Video info array.
+     */
+    VideoInfoArray videoInfo() const;
+
+    /**
+     * @brief Get the display name.
+     * @note The returned object supports only move semantics,
+        internal data should not be freed by a caller. It is automatically freed when the object is destroyed.
+     * @return char* The display name.
+     */
+    VisionableString displayName() const;
+
+    /**
+     * @brief Check if the participant is local.
+     * @return bool True if local, false otherwise.
+     */
+    bool isLocal() const;
+
+    /**
+     * @brief Get the user UUID.
+     * @return const char* The user UUID.
+     */
+    const char* getUserUUID() const;
+
+private:
+    char * userUUID;
+};
+
+class DATASTRUCTURE_EXPORT VideoView {
+public:
+    VideoView(const char * streamId);
+    ~VideoView();
+
+    VideoView(const VideoView&) = delete;
+    VideoView& operator=(VideoView&) = delete;
+
+private:
+    char* streamId;
+};
+
+#endif //MEETING_SDK_DATASTRUCTURES_H
