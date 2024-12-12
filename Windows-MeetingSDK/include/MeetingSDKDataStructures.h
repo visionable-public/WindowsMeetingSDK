@@ -356,17 +356,17 @@ public:
     VisionableString userUUID;
     VisionableString protocol;
     VisionableString codec;
-    uint32_t framerate;
-    uint32_t kbps;
-    uint32_t droppedCtrl;
-    uint32_t droppedData;
-    uint32_t upstreamLatency;
-    uint32_t upstreamLoss;
-    uint32_t upstreamJitter;
-    uint32_t downstreamLatency;
-    uint32_t downstreamLoss;
-    uint32_t downstreamJitter;
-    uint32_t bars;
+    uint64_t droppedCtrl;
+    uint64_t droppedData;
+    int32_t framerate;
+    int32_t kbps;
+    int32_t upstreamLatency;
+    int32_t upstreamLoss;
+    int32_t upstreamJitter;
+    int32_t downstreamLatency;
+    int32_t downstreamLoss;
+    int32_t downstreamJitter;
+    int32_t bars;
 };
 
 class DATASTRUCTURE_EXPORT VideoStatistics {
@@ -384,10 +384,10 @@ public:
     uint64_t kBytesSent;
     uint64_t dataBytesDropped;
     uint64_t ctrlBytesDropped;
-    uint32_t cpuUsage;
-    uint32_t bars;
-    uint32_t lastNatArrival;
-    uint32_t connectionStatus;
+    int32_t cpuUsage;
+    int32_t bars;
+    int32_t lastNatArrival;
+    int32_t connectionStatus;
 };
 
 
@@ -401,19 +401,20 @@ public:
     AudioStreamStatistic(AudioStreamStatistic&&) noexcept;
     AudioStreamStatistic& operator=(AudioStreamStatistic&&) noexcept;
 
+    VisionableString streamId;
     VisionableString name;
     VisionableString userUUID;
     VisionableString codec;
     VisionableString protocol;
-    uint32_t droppedCtrl;
-    uint32_t droppedData;
-    uint32_t upstreamLatency;
-    uint32_t upstreamLoss;
-    uint32_t upstreamJitter;
-    uint32_t downstreamLatency;
-    uint32_t downstreamLoss;
-    uint32_t downstreamJitter;
-    uint32_t bars;
+    uint64_t droppedCtrl;
+    uint64_t droppedData;
+    int32_t upstreamLatency;
+    int32_t upstreamLoss;
+    int32_t upstreamJitter;
+    int32_t downstreamLatency;
+    int32_t downstreamLoss;
+    int32_t downstreamJitter;
+    int32_t bars;
 };
 
 class DATASTRUCTURE_EXPORT AudioStatistic {
@@ -433,19 +434,19 @@ public:
     uint64_t kBytesSent;
     uint64_t dataBytesDropped;
     uint64_t ctrlBytesDropped;
-    uint32_t bars;
-    uint32_t connectionStatus;
-    uint32_t upstreamFps;
-    uint32_t upstreamKbps;
-    uint32_t upstreamLoss;
-    uint32_t upstreamLatency;
-    uint32_t upstreamJitter;
-    uint32_t downstreamFps;
-    uint32_t downstreamKbps;
-    uint32_t downstreamLoss;
-    uint32_t downstreamLatency;
-    uint32_t downstreamJitter;
-    uint32_t lastNatArrival;
+    int32_t lastNatArrival;
+    int32_t bars;
+    int32_t connectionStatus;
+    int32_t upstreamFps;
+    int32_t upstreamKbps;
+    int32_t upstreamLoss;
+    int32_t upstreamLatency;
+    int32_t upstreamJitter;
+    int32_t downstreamFps;
+    int32_t downstreamKbps;
+    int32_t downstreamLoss;
+    int32_t downstreamLatency;
+    int32_t downstreamJitter;
 };
 
 #endif //MEETING_SDK_DATASTRUCTURES_H
