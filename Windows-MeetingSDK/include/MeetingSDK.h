@@ -198,12 +198,39 @@ public:
     bool disableVideoPreview(const char * camera);
 
     /**
+     * @brief Enable sharing of particular area of current application window
+     * @param mode Sharing mode.
+     * @param x X-axis offset (relative to window origin)
+     * @param y y-axis offset (relative to window origin)
+     * @param width Capturing area width
+     * @param height Capturing area height
+     * @return True if successful, false otherwise.
+     */
+    bool enableCurrentWindowAreaSharing(const char * mode, int x, int y, int width, int height);
+
+    /**
+     * @brief Update capturing area of current window sharing
+     * @param x X-axis offset (relative to window origin)
+     * @param y y-axis offset (relative to window origin)
+     * @param width Capturing area width
+     * @param height Capturing area height
+     * @return True if successful, false otherwise.
+     */
+    bool updateCurrentWindowAreaSharing(int x, int y, int width, int height);
+
+    /**
+     * @brief Disable current window area sharing
+     * @return True if successful, false otherwise.
+     */
+    bool disableCurrentWindowAreaSharing();
+
+    /**
      * @brief Enable window sharing.
      * @param windowId Window ID.
      * @param mode Sharing mode.
      * @return True if successful, false otherwise.
      */
-    bool enableWindowSharing(const char * windowId, const char * mode);
+    bool enableWindowSharing(const char* windowId, const char* mode);
 
     /**
      * @brief Disable window sharing.
