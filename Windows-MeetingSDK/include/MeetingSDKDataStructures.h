@@ -34,6 +34,8 @@ public:
     VisionableString(VisionableString&&) noexcept;
     VisionableString& operator=(VisionableString&&) noexcept;
 
+    void setValue(const char* value) noexcept;
+
     /**
      * @brief Get the value of the VisionableString.
      * @return const char* The value of the string.

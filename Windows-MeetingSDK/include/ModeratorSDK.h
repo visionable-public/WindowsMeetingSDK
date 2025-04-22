@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 
+#include "ModeratorSDKEnums.h"
 #include "ModeratorSDKDelegate.h"
 
 #ifdef _MEETING_SDK_EXPORTS_
@@ -112,6 +113,50 @@ public:
      * This method closes the session and disconnects from the WebSocket server.
      */
     void closeSession();
+
+    /**
+     * @brief Sends moderator request to participant.
+     * 
+     * @param participantId - uuid of a participant of interest, cannot be null
+     * @param requestType - moderator request type
+     * @param deviceType - type of device
+     * @param deviceId - ID of device, can be null, if this is enable \ disable microphone request
+     * @param resolution - resolution used for video and desktop devices. Can be null
+     * 
+     * @return true - if request was sent, false - if:
+     *      User has no moderator permissions,
+     *      Combination of request & type is not supported
+     *      Device ID is missing for non enable \ disable microphone request
+     *      Resolution is missing for video & desktop devices enable request
+     */
+    bool sendModeratorRequestToParticipant(const char* participantId, ModeratorSDKRequestType requestType,
+        ModeratorSDKDeviceType deviceType, const char* deviceId, const char* resolution = nullptr);
+
+    /**
+     * @brief Sends moderator request to participant.
+     * 
+     * @param requestType - moderator request type
+     * @param deviceType - type of device
+     * 
+     * @return true - if request was sent, false - if:
+     *      User has no moderator permissions,
+     *      Combination of request & type is not supported
+     * 
+     * NOTE: Supported broadcast requests are enable\disable microphone or video
+     */
+    bool sendModeratorRequestToMeeting(ModeratorSDKRequestType requestType, ModeratorSDKDeviceType deviceType);
+
+    /**
+     * @brief Sends moderator request to participant.
+     *
+     * @param participantId - participant id that is requested to send eReport. Cannot be null
+     * @param description - description of eReport provided by moderator. Cannot be null
+     *
+     *  @return true - if request was sent, false - if:
+     *      User has no moderator permissions,
+     *      Arguments are null
+     */
+    bool sendSubmitEReportToParticipant(const char* participantId, const char* description);
 };
 
 #endif /* MODERATOR_SDK_H */
