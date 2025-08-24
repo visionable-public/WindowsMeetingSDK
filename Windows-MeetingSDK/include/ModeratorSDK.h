@@ -13,12 +13,14 @@
 
 #include "ModeratorSDKEnums.h"
 #include "ModeratorSDKDelegate.h"
+#include "ModeratorSDKDataStructures.h"
 
 #ifdef _MEETING_SDK_EXPORTS_
 #define MODERATOR_SDK_API __declspec(dllexport)
 #else
 #define MODERATOR_SDK_API __declspec(dllimport)
 #endif
+
 
 /**
  * @brief The ModeratorSDK class provides the functionality to interact with RTN using websockets.
@@ -157,6 +159,16 @@ public:
      *      Arguments are null
      */
     bool sendSubmitEReportToParticipant(const char* participantId, const char* description);
+
+    /**
+    * @brief Sends response on moderator request
+    * 
+    * @param requestId - ID of the request to process
+    * @param response - a response object that is related to request that should be processed
+    * 
+    * @return true - if response is valid and request exist, else false. Error is logged into file
+    */
+    bool sendModeratorResponse(const int requestId, ModeratorResponse * response);
 };
 
 #endif /* MODERATOR_SDK_H */

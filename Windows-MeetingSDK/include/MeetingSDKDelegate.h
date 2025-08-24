@@ -217,6 +217,12 @@ public:
      */
     virtual void connectionStatus(uint32_t status) {}
 
+    /**
+     * @brief Called when local participant's is muted or unmuted
+     * @param participant The participant whose network quality changed.
+     * @param isMuted Participant audio state, muted or not
+     */
+    virtual void localParticipantAudioStateChanged(const Participant& participant, bool isMuted) {}
     //TODO: callback(s) related to screen sharing
 };
 

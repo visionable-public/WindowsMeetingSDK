@@ -1,5 +1,5 @@
-#ifndef MODERATOR_SDK_DATASTRUCTURES_H
-#define MODERATOR_SDK_DATASTRUCTURES_H
+#ifndef MODERATOR_SDK_ENUMS_H
+#define MODERATOR_SDK_ENUMS_H
 
 /**
  * @brief The ModeratorSDKDeviceType enum that represents device type supported by ModeratorSDK requests
@@ -25,4 +25,4 @@ enum ModeratorSDKRequestType
 	submitEReport
 };
 
-#endif // MODERATOR_SDK_DATASTRUCTURES_H
+#endif // MODERATOR_SDK_ENUMS_H
