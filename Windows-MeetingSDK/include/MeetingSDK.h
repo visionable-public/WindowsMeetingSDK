@@ -283,6 +283,41 @@ public:
     bool imageCaptureDevicePutImage(int deviceId, const uint8_t *yuv420p_ptr, int width, int height, int size);
 
     /**
+   * @brief Function enables an image sharing device from client to SDK
+   *
+   * @details Function is responsible for mapping shared in-memory buffer and creation of shared in-memory capture device.
+   * Initial size is set to (0,0) and considered as no frame data, until client calls pushExternalImageBuffer
+   *
+   * @param title - A title that should be used for remote user
+   * @param colorspace - A format of data that shall be passed to SDK
+   *
+   * @return - A generated device id that should be used by client for publishing image updates or disabling device, or -1 in case of failure to enable
+   */
+    int enableExternalImageSharing(const char* title, const char*  colorspace);
+
+    /**
+    * @brief Function disables particular device that should be shared
+    *
+    * @param deviceId - ID of a device that should be disabled. Use output of `enableExternalImageSharing` function here
+    *
+    * @return if disable was succesful, otherwise false and error is set
+    */
+    bool disableExternalImageSharing(const int deviceId);
+
+    /**
+    * @brief Function publishes content updates to the previously enabled device
+    *
+    * @param deviceId - ID of a device that should be used during update
+    * @param contentBuffer - A raw buffer in a format that was provided during enabling step
+    * @param width - Width of an image that is stored in raw buffer
+    * @param height - Height of an image that is stored in raw buffer
+    * @param size - A buffer size
+    *
+    * @return - true if image was pushed to the buffer, false and lastError is set in case of any errors
+    */
+    bool pushExternalImageBuffer(const int deviceId, const uint8_t* contentBuffer, const uint32_t width, const uint32_t height, const uint64_t size);
+
+    /**
      * @brief Disable a video stream.
      * @param streamId Stream ID.
      * @return True if successful, false otherwise.

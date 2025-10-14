@@ -63,6 +63,12 @@ public:
      * @return True if the meeting is successfully initialized, false otherwise.
      */
     bool initializeMeeting(const char* server, const char* meetingUUID, const char* token, IntializeMeetingCallback completion);
+
+
+    /**
+    * @brief Sets user agent field for any http\s requests performed by MeetingSDK
+    */
+    void setUserAgent(const char* userAgent);
 };
 
 #endif /* VISIONABLE_API_H */
