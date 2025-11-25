@@ -9,6 +9,7 @@
 #define MEETING_SDK_H
 
 #include "MeetingSDKDelegate.h"
+#include "MeetingSDKEnums.h"
 
 #include <list>
 
@@ -293,7 +294,7 @@ public:
    *
    * @return - A generated device id that should be used by client for publishing image updates or disabling device, or -1 in case of failure to enable
    */
-    int enableExternalImageSharing(const char* title, const char*  colorspace);
+    int enableExternalImageSharing(const char* title, Colorspace colorspace);
 
     /**
     * @brief Function disables particular device that should be shared
