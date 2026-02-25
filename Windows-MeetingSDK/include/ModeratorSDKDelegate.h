@@ -75,9 +75,9 @@ public:
 	 *
 	 *  @param participantId ID of the participant
 	 *  @param requestType request type
-	 *  @param hasFailed status of request, success or failure
+	 *  @param status status of request, success or failure
 	 */
-	virtual void onModeratorRequestResponse(const char * participantId, ModeratorSDKRequestType requestType, bool hasFailed) {};
+	virtual void onModeratorRequestStatus(const char * participantId, ModeratorSDKRequestType requestType, bool status) {};
 
 	/**
 	 *  @brief Notification to a user that device has been disabled by moderator
