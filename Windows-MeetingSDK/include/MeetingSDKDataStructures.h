@@ -142,6 +142,53 @@ private:
     char* windowName;
 };
 
+class DATASTRUCTURE_EXPORT PTZControlInfo
+{
+private:
+    const char* streamId;
+
+public:
+    PTZControlInfo();
+    PTZControlInfo(const char* streamId);
+    ~PTZControlInfo() = default;
+
+    /**
+     * @brief Returns if PTZ uses relative pan
+     * @return bool
+     */
+    bool relativePan() const;
+
+    /**
+     * @brief Returns if PTZ uses relative tilt
+     * @return bool
+     */
+    bool relativeTilt() const;
+
+    /**
+     * @brief Returns if PTZ uses relative zoom
+     * @return bool
+     */
+    bool relativeZoom() const;
+
+    /**
+     * @brief Returns pan step when relative pan is not supported
+     * @return int32_t
+     */
+    int32_t panStep() const;
+
+    /**
+     * @brief Returns tilt step when relative tilt is not supported
+     * @return int32_t
+     */
+    int32_t tiltStep() const;
+
+    /**
+     * @brief Returns zoom step when relative zoom is not supported
+     * @return int32_t
+     */
+    int32_t zoomStep() const;
+};
+
 class DATASTRUCTURE_EXPORT VideoInfo {
 public:
     VideoInfo();
@@ -221,8 +268,11 @@ public:
      */
     uint32_t height() const;
 
+    const PTZControlInfo* controllableInfo() const;
+
 private:
     char * streamId;
+    PTZControlInfo ptzInfo;
 };
 
 class DATASTRUCTURE_EXPORT AudioInfo {

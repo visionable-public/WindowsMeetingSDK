@@ -5,6 +5,7 @@
 #include <map>
 
 #include "MeetingSDKDataStructures.h"
+#include "ModeratorSDKEnums.h"
 
 /**
 * @brief Moderator response base object
@@ -48,6 +49,20 @@ struct DATASTRUCTURE_EXPORT DeviceSelectionResponse : public ModeratorResponse
 
 	DeviceSelectionResponse(DeviceSelectionResponse&&) noexcept;
 	DeviceSelectionResponse& operator=(DeviceSelectionResponse&&) noexcept;
+};
+
+struct DATASTRUCTURE_EXPORT ModeratorPTZCommand
+{
+	ModeratorPTZCommand() = default;
+	~ModeratorPTZCommand() = default;
+
+	VisionableString deviceId;
+	ModeratorSDKPTZCommandType commandType = ModeratorSDKPTZCommandType::UnknownPTZType;
+	// Abs - step, Relative - PTZ action time ms
+	int32_t moveTime = 0;
+	int32_t step = 0;
+
+	bool fastAction = false;
 };
 
 #endif //MODERATOR_SDK_DATASTRUCTURES_H

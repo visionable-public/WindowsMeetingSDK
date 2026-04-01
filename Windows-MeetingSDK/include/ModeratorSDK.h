@@ -82,11 +82,10 @@ public:
      * This method sends a PTZ command to the specified user and device using the WebSocket connection.
      * 
      * @param user The UUID of the user to send the command to.
-     * @param device The UUID of the device to send the command to.
-     * @param command The PTZ command to send.
+     * @param device command, strctutre with information on PTZ command
      * @return true if the command was sent successfully, false otherwise.
      */
-    bool sendPTZCommand(const char* user, const char* device, const char* command);
+    bool sendPTZCommand(const char* user, const ModeratorPTZCommand& command);
 
     /**
      * @brief Set whether remote PTZ control is allowed.

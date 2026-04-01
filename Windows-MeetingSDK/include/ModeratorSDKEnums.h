@@ -25,4 +25,21 @@ enum ModeratorSDKRequestType
 	submitEReport
 };
 
+/**
+* @brief The ModeratorSDKPTZCommandType enum that represents command type supported by ModeratorSDK
+*/
+enum ModeratorSDKPTZCommandType
+{
+	UnknownPTZType = -1,
+	PanLeft,
+	PanRight,
+	TiltUp,
+	TiltDown,
+	ZoomIn,
+	ZoomOut,
+	StopMove,
+	StopZoom
+};
+
+
 #endif // MODERATOR_SDK_ENUMS_H
