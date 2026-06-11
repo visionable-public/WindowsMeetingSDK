@@ -88,8 +88,10 @@ public:
      * @brief Called when a video frame is ready.
      * @param streamId The ID of the video stream.
      * @param pixelBuffer The buffer containing the video frame pixels.
+     * @param width The frame width, that should be when operating with pixel buffer
+     * @param height The frame height, that should be when operating with pixel buffer
      */
-    virtual void videoFrameReady(const char * streamId, void* pixelBuffer) {}
+    virtual void videoFrameReady(const char * streamId, void* pixelBuffer, unsigned long width, unsigned long height) {}
 
     /**
      * @brief Called when a video preview is ready.
@@ -104,8 +106,10 @@ public:
      * @brief Called when a preview frame is ready.
      * @param streamId The ID of the video stream.
      * @param pixelBuffer The buffer containing the preview frame pixels.
+     * @param width The frame width, that should be when operating with pixel buffer
+     * @param height The frame height, that should be when operating with pixel buffer
      */
-    virtual void previewFrameReady(const char * streamId, void* pixelBuffer) {}
+    virtual void previewFrameReady(const char * streamId, void* pixelBuffer, unsigned long width, unsigned long height) {}
 
     /**
      * @brief Called when a preview video is updated.
